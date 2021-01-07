@@ -22,12 +22,13 @@ parse.add_argument('--num_lstm', type=int, default=1)
 
 # data
 parse.add_argument('--oringin_data_path', type=str, default='./data/data_55.csv')
-parse.add_argument('--ae_data_path', type=str, default='./data/data_11.csv')
+parse.add_argument('--ae_data_path', type=str, default='./data/ae_data.pt')
 parse.add_argument('--seq_length', type=int, default=5)
-parse.add_argument('--save_path', type=str, default='./output/result.pt')
+parse.add_argument('--save_path', type=str, default='./output/')
 
 args = parse.parse_args()
 if args.use_AE:
-    args.input_dim = 10
+    args.input_dim = 8
 else:
-    args.input_dim = 59
+    # args.input_dim = 59
+    args.input_dim = 1

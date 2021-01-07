@@ -1,3 +1,4 @@
+import os
 import numpy as np
 import torch
 from torch import nn, optim
@@ -20,7 +21,7 @@ train_dataloader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle
 
 # 3. 训练初始化
 model = Bonds_LSTM(args)
-optimizer = optim.Adam(model.parameters(), lr=1e-4)
+optimizer = optim.Adam(model.parameters(), lr=args.lr)
 loss_func = nn.MSELoss()
 loss_train_all = np.zeros((args.epochs+1))
 loss_val_all = np.zeros((args.epochs+1))
@@ -62,7 +63,6 @@ for epoch in range(args.epochs):
     if epoch % args.show_epoch == 0 and epoch != 0:
         print('epoch=%d || training_loss=%.4f || val_loss=%.4f'%(epoch+1, train_loss, val_loss))
 
-
 # 保存结果
 save_data = {
              'standardization_params': (mu, sigma, test_data),
@@ -70,7 +70,7 @@ save_data = {
              'loss_val_all': loss_val_all,
              'model': model
             }
-torch.save(save_data, args.save_path)
+torch.save(save_data, os.path.join(args.save_path, 'result_%d.pt'%args.input_dim))
 
 
 # 1. 早停
